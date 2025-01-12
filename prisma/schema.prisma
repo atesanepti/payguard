@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+
+}
+
+
+enum ROLE {
+  USER
+  ADMIN
+}
+
+enum PAYMENT_STATUS {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum DOCUMENTS_STATUS {
+  PENDING
+  REJECTED
+  ACCEPTED
+}
+
+model users{
+  id        String @id @default(cuid())
+  email     String @unique
+  role      ROLE @default(USER)
+  payments  payments[]
+  documents documents[]
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+}
+
+model payments{
+  id        String @id @default(cuid())
+  title     String
+  amount    String
+  status    PAYMENT_STATUS @default(PENDING)
+  user_id   String 
+  user      users @relation(fields: [user_id], references: [id])
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+}
+
+model documents{
+  id        String @id @default(cuid())
+  file_url  String
+  status    DOCUMENTS_STATUS @default(PENDING)
+  user_id   String
+  user      users @relation(fields: [user_id], references: [id])
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+}
