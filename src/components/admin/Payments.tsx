@@ -22,8 +22,10 @@ const Payments = () => {
   const [page, setPage] = useState(1);
   const limit = 3;
 
+  console.log({ xc: process.env.NEXT_URL });
+
   const { data } = useSWR(
-    `${process.env.NEXT_URL}/api/admin/payment?page=${page}&limit=${limit}`,
+    `https://payguard-mocha.vercel.app/api/admin/payment?page=${page}&limit=${limit}`,
     async (url: string) => fetchData<PaymentsResPayload>(url)
   );
 

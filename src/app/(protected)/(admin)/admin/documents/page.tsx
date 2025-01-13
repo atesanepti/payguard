@@ -37,7 +37,7 @@ const Documents = () => {
   const limit = 3;
 
   const { data } = useSWR(
-    `${process.env.NEXT_URL}/api/admin/document?page=${page}&limit=${limit}`,
+    `https://payguard-mocha.vercel.app/api/admin/document?page=${page}&limit=${limit}`,
     async (url: string) => fetchData<DocumentsResPayload>(url)
   );
 

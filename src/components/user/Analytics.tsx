@@ -10,12 +10,13 @@ import { cn } from "@/lib/utils";
 
 const Analytics = () => {
   const { data } = useSWR(
-    `${process.env.NEXT_URL}/api/user/analytics`,
+    `https://payguard-mocha.vercel.app/api/user/analytics`,
     async (url: string) => fetchData<AnaliticsPayload>(url)
   );
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
+      
       {data && (
         <>
           <AnalyticsCard

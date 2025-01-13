@@ -10,9 +10,11 @@ import { cn } from "@/lib/utils";
 
 const Analytics = () => {
   const { data } = useSWR(
-    `${process.env.NEXT_URL}/api/admin/analytics`,
+    `https://payguard-mocha.vercel.app/api/admin/analytics`,
     async (url: string) => fetchData<AnaliticsPayload>(url)
   );
+
+  console.log({x : process.env})
 
   return (
     <>
