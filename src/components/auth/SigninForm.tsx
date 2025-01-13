@@ -20,6 +20,8 @@ import SuccessMessage from "../alert/SuccessMessage";
 
 import { signinSchema } from "@/schema";
 import { signin } from "@/actions/signin";
+import Link from "next/link";
+
 const SigninForm = () => {
   const [pending, startTransition] = useTransition();
   const [success, setSuccess] = useState("");
@@ -96,6 +98,15 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
+
+          <div className="flex items-center justify-end mt-2">
+            <Link
+              href="/signup"
+              className="text-blue-600 font-semibold text-xs"
+            >
+              Don't have account?
+            </Link>
+          </div>
 
           <ErrorMessage message={error} />
           <SuccessMessage message={success} />
