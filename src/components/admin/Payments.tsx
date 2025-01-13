@@ -25,7 +25,7 @@ const Payments = () => {
   console.log({ xc: process.env.NEXT_URL });
 
   const { data } = useSWR(
-    `https://payguard-mocha.vercel.app/api/admin/payment?page=${page}&limit=${limit}`,
+    `https://payguard-tan.vercel.app/api/admin/payment?page=${page}&limit=${limit}`,
     async (url: string) => fetchData<PaymentsResPayload>(url)
   );
 

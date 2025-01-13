@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const Analytics = () => {
   const { data } = useSWR(
-    `https://payguard-mocha.vercel.app/api/user/analytics`,
+    `https://payguard-tan.vercel.app/api/user/analytics`,
     async (url: string) => fetchData<AnaliticsPayload>(url)
   );
 

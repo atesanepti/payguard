@@ -28,7 +28,7 @@ const chartConfig = {
 
 export function Chart() {
   const { data } = useSWR(
-    `https://payguard-mocha.vercel.app/api/admin/analytics/chart`,
+    `https://payguard-tan.vercel.app/api/admin/analytics/chart`,
     async (url: string) => fetchData<ChartData>(url)
   );
 
