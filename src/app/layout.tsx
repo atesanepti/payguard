@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const lato = Lato({
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.variable}  font-lato bg-primary`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

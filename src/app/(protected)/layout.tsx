@@ -7,6 +7,7 @@ import { User } from "lucide-react";
 import { getUser } from "@/lib/user";
 import SideBar from "@/components/SideBar";
 import HamburgerMenu, { HamburgerMenuRole } from "@/components/HamburgerMenu";
+import { ROLE } from "@prisma/client";
 
 const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUser();
@@ -28,16 +29,23 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
               <HamburgerMenu role={HamburgerMenuRole.OPEN} />
               <h3 className="text-xl font-semibold text-white">Dashboard</h3>
             </div>
-            <Link href={"/setting"} className="flex gap-3 items-center">
-              <Avatar>
-                <AvatarFallback>
-                  <User className="w-4 h-4" />
-                </AvatarFallback>
-              </Avatar>
-              <span className="text-sm font-medium text-white">
-                {user?.email.substring(0, user?.email.length - 10)}
-              </span>
-            </Link>
+            <div className="flex gap-3">
+              {user.role === ROLE.ADMIN && (
+                <div className="bg-blue-600/15 text-blue-600 border border-blue-600 text-xs px-3 py-1 rounded-full font-semibold cursor-default">
+                  ADMIN
+                </div>
+              )}
+              <Link href={"/setting"} className="flex gap-3 items-center">
+                <Avatar>
+                  <AvatarFallback>
+                    <User className="w-4 h-4" />
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-sm font-medium text-white">
+                  {user?.email.substring(0, user?.email.length - 10)}
+                </span>
+              </Link>
+            </div>
           </div>
         </header>
         <div className="bg-primary p-3 lg:p-6">{children}</div>

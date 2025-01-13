@@ -1,12 +1,12 @@
 import React from "react";
 
 import TableField from "./TableField";
-import { VARIANT } from "@/hooks/usePaymentStatusStyle";
+import { PAYMENT_STATUS } from "@prisma/client";
 
-type Fields = {
+export type Fields = {
   title: string;
   amount: number;
-  status: VARIANT;
+  status: PAYMENT_STATUS;
   date: Date;
   action: React.ReactNode;
 };
@@ -17,7 +17,7 @@ interface PaymentViewTableProps {
 
 const PaymentViewTable = ({ fields }: PaymentViewTableProps) => {
   return (
-    <div >
+    <div>
       <table className="w-full ">
         <thead>
           <tr className="text-left text-gray-400 border-b border-gray-700">
@@ -29,8 +29,8 @@ const PaymentViewTable = ({ fields }: PaymentViewTableProps) => {
           </tr>
         </thead>
         <tbody className="text-gray-300">
-          {fields.map((f, i) => (
-            <TableField fields={f} key={i} />
+          {fields?.map((f, i) => (
+            <TableField fields={f} key={i}  />
           ))}
         </tbody>
       </table>

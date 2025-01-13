@@ -40,8 +40,8 @@ export const extendedSupabaseClient = async () => {
 
     const user = await getUserByEmail(data.user?.email as string);
     data.user.role = user?.role;
-    
-    return { user: user, error: null };
+    data.user.id = user?.id as string
+    return { user: data.user, error: null };
   };
 
   supabase.auth.getCurrentUser = getCurrentUser;

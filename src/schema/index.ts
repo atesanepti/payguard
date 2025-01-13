@@ -31,9 +31,11 @@ export const paymentSchema = zod.object({
     .min(8, { message: "Title must be at least 8 characters long" })
     .max(40, { message: "Title must not exceed 40 chearacters" }),
 
-  amount: zod.number().min(1, { message: "Amount must be at least 1$ " }),
+  amount: zod.string().min(1, { message: "Amount must be at least 1$ " }),
 });
 
 export const documentSchema = zod.object({
   fileUrl: zod.string().min(1, { message: "File Url is required" }),
 });
+
+

@@ -1,7 +1,7 @@
 import React from "react";
 
 import SignupForm from "@/components/auth/SignupForm";
-import FormBuilder from "@/components/auth/Form";
+import FormBuilder from "@/components/Form";
 
 const Signup = () => {
   return (

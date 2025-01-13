@@ -1,15 +1,10 @@
 import moment from "moment";
 
 import { cn } from "@/lib/utils";
-import { VARIANT, usePaymentStatusStyle } from "@/hooks/usePaymentStatusStyle";
+import {  usePaymentStatusStyle } from "@/hooks/usePaymentStatusStyle";
+import { Fields } from "./PaymentViewTable";
 
-type Fields = {
-  title: string;
-  amount: number;
-  status: VARIANT;
-  date: Date;
-  action: React.ReactNode;
-};
+
 
 interface TableFieldPros {
   fields: Fields;
