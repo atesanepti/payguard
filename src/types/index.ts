@@ -16,11 +16,11 @@ export interface DocumentUpdate {
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-type PaymentsPayloadObj = Prisma.paymentsGetPayload<{}>
+export type PaymentsPayloadObj = Prisma.paymentsGetPayload<{}>
 type PaymentsPayload = PaymentsPayloadObj[];
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-type DocumentPayloadObj = Prisma.documentsGetPayload<{}>;
+export type DocumentPayloadObj = Prisma.documentsGetPayload<{}>;
 type DocumentPayload = DocumentPayloadObj[];
 
 export interface PaymentsResPayload {

@@ -2,6 +2,7 @@ import { DocumentUpdate } from "@/types";
 import { DOCUMENTS_STATUS } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "../../../../../../../prisma";
+import { sendEmail } from "@/lib/email";
 
 export const GET = async (
   req: NextRequest,
@@ -41,23 +42,39 @@ export const PUT = async (
 
   try {
     if (actionType === "ACCEPT") {
-      await db.documents.update({
+      const updatedDoc = await db.documents.update({
         where: {
           id,
         },
         data: {
           status: DOCUMENTS_STATUS.ACCEPTED,
         },
+        include: {
+          user: true,
+        },
       });
+      await sendEmail(
+        updatedDoc.user.email,
+        "Indentify Documents Accepetd",
+        "We reviewed your Documents and your Document was accepted "
+      );
     } else if (actionType === "REJECT") {
-      await db.documents.update({
+      const updatedDoc = await db.documents.update({
         where: {
           id,
         },
         data: {
           status: DOCUMENTS_STATUS.REJECTED,
         },
+        include: {
+          user: true,
+        },
       });
+      await sendEmail(
+        updatedDoc.user.email,
+        "Indentify Documents Rejected",
+        "We reviewed your Documents and uour Document was rejected "
+      );
     }
 
     return NextResponse.json(

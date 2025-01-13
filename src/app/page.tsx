@@ -1,9 +1,13 @@
+import { getUser } from "@/lib/user";
+import { ROLE } from "@prisma/client";
+import { redirect } from "next/navigation";
 
+export default async function Home() {
+  const user = await getUser();
 
-export default function Home() {
-  return (
-    <div className="">
-    
-    </div>
-  );
+  if (user === ROLE.USER) {
+    return redirect("/dashboard");
+  }
+
+  return redirect("/admin/dashboard");
 }

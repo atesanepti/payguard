@@ -27,7 +27,7 @@ const PaymentAction = ({ paymentId }: PaymentActionProps) => {
         `http://localhost:3000/api/admin/payment/${paymentId}`,
         data
       );
-      console.log({res})
+      
       if (!res.data.success) {
         throw new Error("Payment was not updated");
       }

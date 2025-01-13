@@ -24,7 +24,7 @@ const PaymentViewTable = ({ fields }: PaymentViewTableProps) => {
             <th className="pb-4 font-medium text-sm">Title</th>
             <th className="pb-4 font-medium text-sm">Amount</th>
             <th className="pb-4 font-medium text-sm">Status</th>
-            <th className="pb-4 font-medium text-sm">Date</th>
+            <th className="pb-4 font-medium text-sm hidden md:block">Date</th>
             <th className="pb-4 font-medium text-sm">Actions</th>
           </tr>
         </thead>

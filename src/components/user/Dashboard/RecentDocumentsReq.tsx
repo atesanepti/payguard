@@ -6,8 +6,7 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
+  
 } from "@/components/ui/pagination";
 import SuspenseX from "@/components/SuspenseX";
 import { DocumentsResPayload } from "@/types";
@@ -24,7 +23,7 @@ const fetchData = async <T,>(url: string) => {
   }
 
   const res = await axios.get<DataFetch>(url);
-  
+
   if (!res.data.success) {
     throw new Error("Fetching failed");
   }
@@ -38,8 +37,7 @@ const RecentDocumentsReq = () => {
   const { data } = useSWR(
     `api/user/document?page=${page}&limit=${limit}`,
     async (url) => fetchData<DocumentsResPayload>(url)
-  );    
-
+  );
 
   const fields = data?.documents?.map((p) => {
     return {
@@ -50,7 +48,6 @@ const RecentDocumentsReq = () => {
     };
   });
 
-
   const handlePagination = (page: number) => {
     setPage(page);
   };
@@ -58,52 +55,52 @@ const RecentDocumentsReq = () => {
   return (
     <div className="bg-secondary rounded-lg border border-gray-700 mt-6 lg:mt-8 w-full">
       <div className="w-full overflow-x-auto">
-        <div className="p-4 lg:p-6 w-full min-w-[500px]">
+        <div className="p-4 lg:p-6 w-full ">
           <div className="flex items-center justify-between mb-3 lg:mb-6">
             <h2 className="text-base lg:text-lg font-semibold text-white">
               Indentity Verification Requests
             </h2>
             <span className="text-gray-400 text-xs">Recent request</span>
           </div>
+          {fields?.length == 0 && (
+            <span className="text-gray-500 block text-center text-sm">
+              No request found
+            </span>
+          )}
 
-          <SuspenseX fallback={<TableSkeleton />} isLoading={!fields}>
-            <>
-              <DocumentsViewTable fields={fields!} />
+          {fields?.length !== 0 && (
+            <SuspenseX fallback={<TableSkeleton />} isLoading={!fields}>
+              <>
+                <DocumentsViewTable fields={fields!} />
 
-              <Pagination className="text-right">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious href="#" />
-                  </PaginationItem>
+                <Pagination className="text-right">
+                  <PaginationContent>
+                    {[
+                      ...Array.from({
+                        length: Math.ceil(Number(data?.totalFound) / limit),
+                      }),
+                    ].map((_, i) => (
+                      <PaginationItem key={i}>
+                        <Button
+                          disabled={page == i + 1}
+                          variant={"secondary"}
+                          value={i}
+                          onClick={() => handlePagination(i + 1)}
+                          className="text-white"
+                        >
+                          {i + 1}
+                        </Button>
+                      </PaginationItem>
+                    ))}
 
-                  {[
-                    ...Array.from({
-                      length: Math.ceil(Number(data?.totalFound) / limit),
-                    }),
-                  ].map((_, i) => (
-                    <PaginationItem key={i}>
-                      <Button
-                        disabled={page == i + 1}
-                        variant={"secondary"}
-                        value={i}
-                        onClick={() => handlePagination(i + 1)}
-                        className="text-white"
-                      >
-                        {i + 1}
-                      </Button>
+                    <PaginationItem>
+                      <PaginationEllipsis className="text-white" />
                     </PaginationItem>
-                  ))}
-
-                  <PaginationItem>
-                    <PaginationEllipsis className="text-white" />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationNext href="#" />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </>
-          </SuspenseX>
+                  </PaginationContent>
+                </Pagination>
+              </>
+            </SuspenseX>
+          )}
         </div>
       </div>
     </div>

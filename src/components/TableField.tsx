@@ -27,7 +27,7 @@ const TableField = ({ fields }: TableFieldPros) => {
           {fields.status}
         </span>
       </td>
-      <td className="py-2 lg:py-3 text-sm">
+      <td className="py-2 lg:py-3 text-sm hidden md:block">
         {moment(fields.date).format("MMM Do YY")}
       </td>
       <td className="py-2 lg:py-3 text-sm">{fields.action}</td>

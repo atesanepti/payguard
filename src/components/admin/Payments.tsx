@@ -6,8 +6,6 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import PaymentViewTable from "@/components/PaymentViewTable";
 import SuspenseX from "@/components/SuspenseX";
@@ -25,7 +23,7 @@ const Payments = () => {
   console.log({ xc: process.env.NEXT_URL });
 
   const { data } = useSWR(
-    `https://payguard-tan.vercel.app/api/admin/payment?page=${page}&limit=${limit}`,
+    `/api/admin/payment?page=${page}&limit=${limit}`,
     async (url: string) => fetchData<PaymentsResPayload>(url)
   );
 
@@ -59,42 +57,45 @@ const Payments = () => {
             <span className="text-gray-400 text-xs">Recent request</span>
           </div>
 
-          <SuspenseX fallback={<TableSkeleton />} isLoading={!fields}>
-            <>
-              <PaymentViewTable fields={fields!} />
+          {fields?.length == 0 && (
+            <span className="text-gray-500 block text-center text-sm">
+              No request found
+            </span>
+          )}
 
-              <Pagination className="text-right">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious href="#" />
-                  </PaginationItem>
+          {fields?.length !== 0 && (
+            <SuspenseX fallback={<TableSkeleton />} isLoading={!fields}>
+              <>
+                <PaymentViewTable fields={fields!} />
 
-                  {[
-                    ...Array.from({ length: Number(data?.totalFound) / limit }),
-                  ].map((_, i) => (
-                    <PaginationItem key={i}>
-                      <Button
-                        disabled={page == i + 1}
-                        variant={"secondary"}
-                        value={i}
-                        onClick={() => handlePagination(i + 1)}
-                        className="text-white"
-                      >
-                        {i + 1}
-                      </Button>
+                <Pagination className="text-right">
+                  <PaginationContent>
+                    {[
+                      ...Array.from({
+                        length: Number(data?.totalFound) / limit,
+                      }),
+                    ].map((_, i) => (
+                      <PaginationItem key={i}>
+                        <Button
+                          disabled={page == i + 1}
+                          variant={"secondary"}
+                          value={i}
+                          onClick={() => handlePagination(i + 1)}
+                          className="text-white"
+                        >
+                          {i + 1}
+                        </Button>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationEllipsis className="text-white" />
                     </PaginationItem>
-                  ))}
-
-                  <PaginationItem>
-                    <PaginationEllipsis className="text-white" />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationNext href="#" />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </>
-          </SuspenseX>
+                  </PaginationContent>
+                </Pagination>
+              </>
+            </SuspenseX>
+          )}
         </div>
       </div>
     </div>

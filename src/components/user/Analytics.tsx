@@ -10,72 +10,73 @@ import { cn } from "@/lib/utils";
 
 const Analytics = () => {
   const { data } = useSWR(
-    `https://payguard-tan.vercel.app/api/user/analytics`,
+    `/api/user/analytics`,
     async (url: string) => fetchData<AnaliticsPayload>(url)
   );
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
-      
-      {data && (
-        <>
-          <AnalyticsCard
-            title="Total Requests"
-            quantity={data.total}
-            style={
-              <div
-                className={cn(
-                  "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-blue-500"
-                )}
-              >
-                <File className={`text-blue-500 w-4 h-4`} />
-              </div>
-            }
-          />
-          <AnalyticsCard
-            title="Pending"
-            quantity={data.pending}
-            style={
-              <div
-                className={cn(
-                  "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-yellow-500"
-                )}
-              >
-                <Clock className={`text-yellow-500 w-4 h-4`} />
-              </div>
-            }
-          />
-          <AnalyticsCard
-            title="Approved"
-            quantity={data.approved}
-            style={
-              <div
-                className={cn(
-                  "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-green-500"
-                )}
-              >
-                <BadgeCheck className={`text-green-500 w-4 h-4`} />
-              </div>
-            }
-          />
-          <AnalyticsCard
-            title="Rejected"
-            quantity={data.rejected}
-            style={
-              <div
-                className={cn(
-                  "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-red-500"
-                )}
-              >
-                <BadgeX className={`text-red-500 w-4 h-4`} />
-              </div>
-            }
-          />
-        </>
-      )}
+    <>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
+        {data && (
+          <>
+            <AnalyticsCard
+              title="Total Requests"
+              quantity={data.total}
+              style={
+                <div
+                  className={cn(
+                    "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-blue-500"
+                  )}
+                >
+                  <File className={`text-blue-500 w-4 h-4`} />
+                </div>
+              }
+            />
+            <AnalyticsCard
+              title="Pending"
+              quantity={data.pending}
+              style={
+                <div
+                  className={cn(
+                    "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-yellow-500"
+                  )}
+                >
+                  <Clock className={`text-yellow-500 w-4 h-4`} />
+                </div>
+              }
+            />
+            <AnalyticsCard
+              title="Approved"
+              quantity={data.approved}
+              style={
+                <div
+                  className={cn(
+                    "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-green-500"
+                  )}
+                >
+                  <BadgeCheck className={`text-green-500 w-4 h-4`} />
+                </div>
+              }
+            />
+            <AnalyticsCard
+              title="Rejected"
+              quantity={data.rejected}
+              style={
+                <div
+                  className={cn(
+                    "p-3 bg-opacity-20 rounded-lg flex items-center justify-center bg-red-500"
+                  )}
+                >
+                  <BadgeX className={`text-red-500 w-4 h-4`} />
+                </div>
+              }
+            />
+          </>
+        )}
+      </div>
 
       {!data && <AnalyticsSkeleton />}
-    </div>
+    </>
   );
 };
 

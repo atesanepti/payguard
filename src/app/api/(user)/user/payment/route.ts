@@ -39,7 +39,7 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
-console.log("called")
+
   const page = +searchParams.get("page")!;
   const limit = +searchParams.get("limit")!;
 

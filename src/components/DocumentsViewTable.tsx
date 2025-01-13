@@ -24,7 +24,7 @@ const DocumentsViewTable = ({ fields }: DocumentsViewTableProps) => {
             <th className="pb-4 font-medium text-sm">Document</th>
             <th className="pb-4 font-medium text-sm">Type</th>
             <th className="pb-4 font-medium text-sm">Status</th>
-            <th className="pb-4 font-medium text-sm">Date</th>
+            <th className="pb-4 font-medium text-sm hidden md:block">Date</th>
             <th className="pb-4 font-medium text-sm">Action</th>
           </tr>
         </thead>

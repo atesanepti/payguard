@@ -22,5 +22,5 @@ export const signin = async (credentials: zod.infer<typeof signinSchema>) => {
     }
   }
 
-  return { success: "Logged in successfull", redirect: "/" };
+  return { success: "Logged in successfull", redirect: "/setting" };
 };

@@ -18,6 +18,7 @@ import {
 import useSWR from "swr";
 import { fetchData } from "@/lib/fetchData";
 import { ChartData } from "@/types";
+import Spinner from "../Spinner";
 
 const chartConfig = {
   desktop: {
@@ -27,9 +28,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function Chart() {
-  const { data } = useSWR(
-    `https://payguard-tan.vercel.app/api/admin/analytics/chart`,
-    async (url: string) => fetchData<ChartData>(url)
+  const { data } = useSWR(`/api/admin/analytics/chart`, async (url: string) =>
+    fetchData<ChartData>(url)
   );
 
   const chartData = [
@@ -87,6 +87,12 @@ export function Chart() {
             </div>
           </CardFooter>
         </Card>
+      )}
+
+      {!data && (
+        <div className="relative">
+          <Spinner />
+        </div>
       )}
     </>
   );

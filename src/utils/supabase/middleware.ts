@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { getUser } from "@/lib/user";
 import { ROLE } from "@prisma/client";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { extendedSupabaseClient } from "./client";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -30,11 +33,11 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const { user } = await supabase.auth.getCurrentUser();
-
+  const {data} = await supabase.auth.getUser();
+  const user = data.user
   const publicRoutes = ["/error"];
   const authRoutes = ["/signup", "/signin"];
-  const adminRoute = "/admin";
+
   if (
     !user &&
     !publicRoutes.includes(request.nextUrl.pathname) &&
@@ -46,24 +49,6 @@ export async function updateSession(request: NextRequest) {
   } else if (user && authRoutes.includes(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
-    return NextResponse.redirect(url);
-  }
-
-  if (
-    request.nextUrl.pathname.startsWith(adminRoute) &&
-    user.role !== ROLE.ADMIN
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
-  }
-
-  if (
-    !request.nextUrl.pathname.startsWith(adminRoute) &&
-    user.role === ROLE.ADMIN
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin/dashboard";
     return NextResponse.redirect(url);
   }
 
